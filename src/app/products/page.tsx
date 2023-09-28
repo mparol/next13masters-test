@@ -1,6 +1,5 @@
-import { getProductsList } from "@/api/products";
-import { ProductList } from "@/ui/organisms/ProductList";
+import { redirect } from "next/navigation";
 
 export default async function ProductsPage() {
-	return <ProductList products={await getProductsList()} />;
+	redirect("/products/1");
 }
