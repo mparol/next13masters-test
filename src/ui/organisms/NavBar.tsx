@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { ShoppingBag, UserCircle } from "lucide-react";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 
 export const NavBar = () => {
 	return (
 		<header className="sticky top-0 z-20 border-b bg-gray-100 bg-opacity-90 backdrop-blur-md">
-			<nav className="flex h-16 items-center justify-between px-4">
+			<nav className="flex h-16 items-center justify-between px-8">
 				<Link href="/" className="text-2xl font-bold">
 					Sklep Next13masters
 				</Link>
@@ -31,10 +32,17 @@ export const NavBar = () => {
 				</ul>
 				<ul className="flex space-x-6">
 					<li>
-						<Link href="/">Konto</Link>
+						<Link href="/">
+							<UserCircle />
+						</Link>
 					</li>
 					<li>
-						<Link href="/">Koszyk</Link>
+						<Link href="/">
+							<div className="flex space-x-2">
+								<ShoppingBag />
+								<p className="font-semibold">0</p>
+							</div>
+						</Link>
 					</li>
 				</ul>
 			</nav>
