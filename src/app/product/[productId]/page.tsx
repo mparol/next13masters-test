@@ -2,6 +2,7 @@
 //import { getProductById, getProductsList } from "@/api/products";
 import { type Metadata } from "next";
 //import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
+import { notFound } from "next/navigation";
 import { getProductById } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { formatMoney } from "@/utils";
@@ -13,8 +14,8 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
 	const product = await getProductById(params.productId);
 	return {
-		title: `${product.name} - Sklep internetowy`,
-		description: product.description,
+		title: `${product?.name} - Sklep internetowy`,
+		description: product?.description,
 	};
 };
 
@@ -25,11 +26,12 @@ export const generateMetadata = async ({
 
 export default async function ProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
+	if (!product) notFound();
 	return (
 		<article>
 			<form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<div className="overflow-hidden rounded-md border bg-slate-50 hover:bg-slate-100">
-					<ProductImage {...product.coverImage} />
+					<ProductImage src={product.images[0].url} alt={product.name} />
 				</div>
 				<div className="px-6">
 					<h1 className="flex-auto text-3xl font-bold tracking-tight text-slate-900">
