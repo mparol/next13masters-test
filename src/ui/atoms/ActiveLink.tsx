@@ -23,7 +23,7 @@ export function ActiveLink<T extends string>({
 	const isActive = partial ? pathname.startsWith(href.toString()) : pathname === href;
 
 	return (
-		<Link
+		<Link<T>
 			href={href}
 			className={isActive ? activeClassName : className}
 			aria-current={isActive ? "page" : undefined}

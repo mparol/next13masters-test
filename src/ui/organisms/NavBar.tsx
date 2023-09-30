@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ShoppingBag, UserCircle } from "lucide-react";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
+import type { CategoryItemFragment } from "@/gql/graphql";
 
-export const NavBar = () => {
+export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) => {
+	// pasuje tez typ CategoriesListQuery["categories"], ale skoro na fragment nie trzeba tworzyc osobnego pliku to lepszy fragment
 	return (
 		<header className="sticky top-0 z-20 border-b bg-gray-100 bg-opacity-90 backdrop-blur-md">
 			<nav className="flex h-16 items-center justify-between px-8">
@@ -14,7 +16,7 @@ export const NavBar = () => {
 						<ActiveLink
 							href="/"
 							className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-							activeClassName="flex h-full justify-center items-center border-b-4 border-slate-300 hover:bg-slate-200"
+							activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
 						>
 							Home
 						</ActiveLink>
@@ -24,10 +26,30 @@ export const NavBar = () => {
 							href="/products"
 							partial={true}
 							className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-							activeClassName="flex h-full justify-center items-center border-b-4 border-slate-300 hover:bg-slate-200"
+							activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
 						>
 							All
 						</ActiveLink>
+					</li>
+					{categories.map((category) => (
+						<li key={category.slug} className="h-full min-w-[3rem]">
+							<ActiveLink
+								href={`/categories/${category.slug}`}
+								partial={true}
+								className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
+								activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
+							>
+								{category.name}
+							</ActiveLink>
+						</li>
+					))}
+				</ul>
+				<ul className="flex h-full items-center space-x-6">
+					<li>
+						<ActiveLink href="/collections">kol</ActiveLink>
+					</li>
+					<li>
+						<ActiveLink href="/collections">kol</ActiveLink>
 					</li>
 				</ul>
 				<ul className="flex space-x-6">

@@ -1,0 +1,10 @@
+query CategoriesList {
+	categories {
+		...CategoryItem
+	}
+}
+
+fragment CategoryItem on Category {
+	name
+	slug
+}
