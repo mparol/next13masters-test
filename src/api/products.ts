@@ -5,8 +5,8 @@ import {
 	ProductsGetListDocument,
 } from "@/gql/graphql";
 
-export async function getProductsList(take: number, offset: number) {
-	const res = await executeGraphql(ProductsGetListDocument);
+export async function getProductsList(take: number, skip: number) {
+	const res = await executeGraphql(ProductsGetListDocument, { take, skip });
 	return res.products;
 }
 

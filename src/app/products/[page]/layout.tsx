@@ -7,10 +7,12 @@ export default function ProductsPageLayout({
 	children: React.ReactNode;
 	params: { page: number };
 }) {
-	// 4206 products
+	// 14 products
 	//TODO magic numbers
+	const totalProducts = 14;
+	const perPage = 4;
 	const page = Number(params.page);
-	const totalPages = Math.ceil(4206 / 12);
+	const totalPages = Math.ceil(totalProducts / perPage);
 	const firstPages = Array.from({ length: 1 }, (_, i) => i + 1);
 	const aroundPages = Array.from({ length: 3 }, (_, i) => page - 1 + i).filter(
 		(page) => page > 0 && page <= totalPages,
