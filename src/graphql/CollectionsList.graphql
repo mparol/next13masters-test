@@ -1,0 +1,13 @@
+query CollectionsList {
+	collections {
+		...CollectionItem
+	}
+}
+
+fragment CollectionItem on Collection {
+	slug
+	name
+	image {
+		url
+	}
+}

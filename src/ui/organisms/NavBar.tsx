@@ -44,14 +44,6 @@ export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) =
 						</li>
 					))}
 				</ul>
-				<ul className="flex h-full items-center space-x-6">
-					<li>
-						<ActiveLink href="/collections">kol</ActiveLink>
-					</li>
-					<li>
-						<ActiveLink href="/collections">kol</ActiveLink>
-					</li>
-				</ul>
 				<ul className="flex space-x-6">
 					<li>
 						<Link href="/">

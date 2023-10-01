@@ -1,10 +1,13 @@
 import { ProductList } from "@ui/organisms/ProductList";
-import { getProductsList } from "@/api/products";
+import { getRelatedProductsList } from "@/api/products";
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const SuggestedProductsList = async () => {
-	await sleep(3000);
-	const products = await getProductsList(4, 100);
-	return <ProductList products={products} />;
+export const SuggestedProducts = async ({ productId }: { productId: string }) => {
+	const products = await getRelatedProductsList(productId);
+	if (!products) return <div>Error getting related products</div>;
+	return (
+		<div className="mt-12" data-testid="related-products">
+			<h1 className="mb-5 text-xl font-medium">Also check out these related products:</h1>
+			<ProductList products={products} />
+		</div>
+	);
 };

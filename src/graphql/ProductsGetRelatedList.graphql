@@ -1,0 +1,9 @@
+query ProductsGetRelatedList($id: ID!) {
+	product(where: { id: $id }) {
+		categories(first: 1) {
+			products(first: 4) {
+				...ProductListItem
+			}
+		}
+	}
+}

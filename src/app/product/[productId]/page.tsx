@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getProductById } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { formatMoney } from "@/utils";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 export const generateMetadata = async ({
 	params,
@@ -75,6 +76,7 @@ export default async function ProductPage({ params }: { params: { productId: str
 					</div>
 				</div>
 			</form>
+			<SuggestedProducts productId={product.id} />
 		</article>
 
 		// <>
