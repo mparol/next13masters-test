@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ShoppingBag, UserCircle } from "lucide-react";
+import { Suspense } from "react";
+import { SearchField } from "./SearchField";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import type { CategoryItemFragment } from "@/gql/graphql";
 
@@ -44,6 +46,9 @@ export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) =
 						</li>
 					))}
 				</ul>
+				<Suspense fallback={<div className="w-72"></div>}>
+					<SearchField />
+				</Suspense>
 				<ul className="flex space-x-6">
 					<li>
 						<Link href="/">

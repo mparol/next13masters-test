@@ -3,7 +3,7 @@
 import { type Metadata } from "next";
 //import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { notFound } from "next/navigation";
-import { getProductById } from "@/api/products";
+import { getProductById, getProductVariantsById } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { formatMoney } from "@/utils";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
@@ -28,6 +28,7 @@ export const generateMetadata = async ({
 export default async function ProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
 	if (!product) notFound();
+	const variants = await getProductVariantsById(product.id);
 	return (
 		<article>
 			<form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -65,6 +66,24 @@ export default async function ProductPage({ params }: { params: { productId: str
 						</svg>
 						<p className="ml-1 text-sm font-semibold text-slate-500">In stock</p>
 					</div>
+					{variants && variants.length > 0 && (
+						<>
+							<div className="mt-6 font-medium">Choose a variant:</div>
+							<div className="mt-4 text-sm">
+								{variants?.map((variant) => (
+									<label key={variant.id} className="inline-flex items-center">
+										<input
+											type="radio"
+											name="variant"
+											value={variant.id}
+											className="form-radio h-4 w-4 text-red-600"
+										/>
+										<span className="ml-2 mr-4 text-gray-700">{variant.name}</span>
+									</label>
+								))}
+							</div>
+						</>
+					)}
 					<div className="mt-8">
 						<button
 							type="submit"

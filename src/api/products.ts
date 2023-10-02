@@ -6,9 +6,11 @@ import {
 	ProductsGetByCategoryCountDocument,
 	ProductsGetByCategorySlugDocument,
 	ProductsGetByCollectionSlugDocument,
+	ProductsGetBySearchQueryDocument,
 	ProductsGetCountDocument,
 	ProductsGetListDocument,
 	ProductsGetRelatedListDocument,
+	ProductVariantsGetByIdDocument,
 } from "@/gql/graphql";
 
 export async function getProductsCount() {
@@ -49,9 +51,19 @@ export async function getProductsByCollectionSlug(collectionSlug: string) {
 	return res.collections[0]?.products;
 }
 
+export async function getProductsBySearchQuery(query: string) {
+	const res = await executeGraphql(ProductsGetBySearchQueryDocument, { query });
+	return res.products;
+}
+
 export async function getProductById(id: string) {
 	const res = await executeGraphql(ProductGetByIdDocument, { id });
 	return res.product;
+}
+
+export async function getProductVariantsById(id: string) {
+	const res = await executeGraphql(ProductVariantsGetByIdDocument, { id });
+	return res.product?.variants;
 }
 
 export async function getCategoriesList() {

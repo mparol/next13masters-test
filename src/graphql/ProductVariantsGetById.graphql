@@ -1,0 +1,23 @@
+query ProductVariantsGetById($id: ID!) {
+	product(where: { id: $id }) {
+		variants {
+			__typename
+			... on ProductSizeColorVariant {
+				id
+				name
+				color
+				size
+			}
+			... on ProductSizeVariant {
+				id
+				name
+				size
+			}
+			... on ProductColorVariant {
+				id
+				name
+				color
+			}
+		}
+	}
+}

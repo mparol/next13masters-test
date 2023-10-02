@@ -1,0 +1,5 @@
+query ProductsGetBySearchQuery($query: String!) {
+	products(where: { _search: $query }) {
+		...ProductListItem
+	}
+}
