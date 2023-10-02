@@ -25,8 +25,8 @@ export const Pagination = ({
 				<li key={page} className="h-full min-w-[3rem]">
 					<ActiveLink
 						href={`${base}/${page}` as Route}
-						className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-						activeClassName="flex h-full justify-center items-center border-b-4 border-slate-300 hover:bg-slate-200"
+						className="flex h-full items-center justify-center rounded-xl py-1 text-gray-600 hover:bg-slate-200"
+						activeClassName="flex h-full items-center justify-center rounded-xl bg-gray-100 py-1 text-gray-600 hover:bg-slate-200"
 					>
 						{page}
 					</ActiveLink>

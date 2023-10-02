@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getCollectionsList } from "@/api/products";
+import { getCollectionsList, getProductsList } from "@/api/products";
+import { ProductList } from "@/ui/organisms/ProductList";
 
 export default async function HomePage() {
 	return (
@@ -18,6 +19,8 @@ export default async function HomePage() {
 					</li>
 				))}
 			</ul>
+			<div className="h-16" />
+			<ProductList products={await getProductsList(4, 0)} />
 		</>
 	);
 }

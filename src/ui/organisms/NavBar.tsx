@@ -9,43 +9,45 @@ export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) =
 	// pasuje tez typ CategoriesListQuery["categories"], ale skoro na fragment nie trzeba tworzyc osobnego pliku to lepszy fragment
 	return (
 		<header className="sticky top-0 z-20 border-b bg-gray-100 bg-opacity-90 backdrop-blur-md">
-			<nav className="flex h-16 items-center justify-between px-8">
+			<div className="flex h-16 items-center justify-between px-8">
 				<Link href="/" className="text-2xl font-bold">
 					Sklep Next13masters
 				</Link>
-				<ul className="flex h-full items-center space-x-6">
-					<li className="h-full min-w-[3rem]">
-						<ActiveLink
-							href="/"
-							className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-							activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
-						>
-							Home
-						</ActiveLink>
-					</li>
-					<li className="h-full min-w-[3rem]">
-						<ActiveLink
-							href="/products"
-							partial={true}
-							className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-							activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
-						>
-							All
-						</ActiveLink>
-					</li>
-					{categories.map((category) => (
-						<li key={category.slug} className="h-full min-w-[3rem]">
+				<nav className="h-full">
+					<ul className="flex h-full items-center space-x-6">
+						<li className="h-full min-w-[3rem]">
 							<ActiveLink
-								href={`/categories/${category.slug}`}
-								partial={true}
-								className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-slate-200"
-								activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-slate-200"
+								href="/"
+								className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-gray-200 hover:bg-opacity-50"
+								activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-gray-200 hover:bg-opacity-50"
 							>
-								{category.name}
+								Home
 							</ActiveLink>
 						</li>
-					))}
-				</ul>
+						<li className="h-full min-w-[3rem]">
+							<ActiveLink
+								href="/products"
+								partial={true}
+								className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-gray-200 hover:bg-opacity-50"
+								activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-gray-200 hover:bg-opacity-50"
+							>
+								All
+							</ActiveLink>
+						</li>
+						{categories.map((category) => (
+							<li key={category.slug} className="h-full min-w-[3rem]">
+								<ActiveLink
+									href={`/categories/${category.slug}`}
+									partial={true}
+									className="flex h-full items-center justify-center border-b-4 border-transparent hover:bg-gray-200 hover:bg-opacity-50"
+									activeClassName="flex h-full justify-center items-center border-b-4 border-cyan-600 hover:bg-gray-200 hover:bg-opacity-50"
+								>
+									{category.name}
+								</ActiveLink>
+							</li>
+						))}
+					</ul>
+				</nav>
 				<Suspense fallback={<div className="w-72"></div>}>
 					<SearchField />
 				</Suspense>
@@ -64,7 +66,7 @@ export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) =
 						</Link>
 					</li>
 				</ul>
-			</nav>
+			</div>
 		</header>
 	);
 };
