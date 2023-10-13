@@ -1,0 +1,10 @@
+POST http://localhost:3000/webhooks/product
+Content-Type: application/json
+
+{
+    "data": {
+        "id": "aaabbbccc",
+        "srid": "dupa"
+    },
+    "sth": "sth"
+}
