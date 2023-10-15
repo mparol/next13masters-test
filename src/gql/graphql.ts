@@ -10795,6 +10795,29 @@ export type ProductsGetRelatedListQueryVariables = Exact<{
 
 export type ProductsGetRelatedListQuery = { product?: { categories: Array<{ products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> }> } | null };
 
+export type ReviewCreateMutationVariables = Exact<{
+  review: ReviewCreateInput;
+}>;
+
+
+export type ReviewCreateMutation = { createReview?: { id: string } | null };
+
+export type ReviewPublishMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ReviewPublishMutation = { publishReview?: { id: string } | null };
+
+export type ReviewsGetByProductIdQueryVariables = Exact<{
+  productId: Scalars['ID']['input'];
+}>;
+
+
+export type ReviewsGetByProductIdQuery = { reviews: Array<{ id: string, headline: string, name: string, email: string, content: string, rating: number }> };
+
+export type ReviewFragment = { id: string, headline: string, name: string, email: string, content: string, rating: number };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -10837,6 +10860,16 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
   price
 }
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
+export const ReviewFragmentDoc = new TypedDocumentString(`
+    fragment Review on Review {
+  id
+  headline
+  name
+  email
+  content
+  rating
+}
+    `, {"fragmentName":"Review"}) as unknown as TypedDocumentString<ReviewFragment, unknown>;
 export const CategoriesListDocument = new TypedDocumentString(`
     query CategoriesList {
   categories {
@@ -11012,3 +11045,31 @@ export const ProductsGetRelatedListDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetRelatedListQuery, ProductsGetRelatedListQueryVariables>;
+export const ReviewCreateDocument = new TypedDocumentString(`
+    mutation ReviewCreate($review: ReviewCreateInput!) {
+  createReview(data: $review) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<ReviewCreateMutation, ReviewCreateMutationVariables>;
+export const ReviewPublishDocument = new TypedDocumentString(`
+    mutation ReviewPublish($id: ID!) {
+  publishReview(where: {id: $id}, to: PUBLISHED) {
+    id
+  }
+}
+    `) as unknown as TypedDocumentString<ReviewPublishMutation, ReviewPublishMutationVariables>;
+export const ReviewsGetByProductIdDocument = new TypedDocumentString(`
+    query ReviewsGetByProductId($productId: ID!) {
+  reviews(where: {product: {id: $productId}}) {
+    ...Review
+  }
+}
+    fragment Review on Review {
+  id
+  headline
+  name
+  email
+  content
+  rating
+}`) as unknown as TypedDocumentString<ReviewsGetByProductIdQuery, ReviewsGetByProductIdQueryVariables>;

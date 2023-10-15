@@ -1,0 +1,14 @@
+query ReviewsGetByProductId($productId: ID!) {
+	reviews(where: { product: { id: $productId } }) {
+		...Review
+	}
+}
+
+fragment Review on Review {
+	id
+	headline
+	name
+	email
+	content
+	rating
+}

@@ -7,6 +7,8 @@ import { getProductById, getProductVariantsById } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { formatMoney } from "@/utils";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { AddReviewForm } from "@/ui/organisms/AddReviewForm";
+import { ReviewList } from "@/ui/organisms/ReviewList";
 
 export const generateMetadata = async ({
 	params,
@@ -96,6 +98,16 @@ export default async function ProductPage({ params }: { params: { productId: str
 				</div>
 			</form>
 			<SuggestedProducts productId={product.id} />
+
+			<h2 className="mt-24 text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h2>
+			<div className="flex gap-24">
+				<div className="w-1/3">
+					<AddReviewForm productId={product.id} />
+				</div>
+				<div className="flex-1">
+					<ReviewList productId={product.id} />
+				</div>
+			</div>
 		</article>
 
 		// <>
