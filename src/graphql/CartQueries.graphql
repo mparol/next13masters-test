@@ -1,0 +1,44 @@
+query CartGetById($id: ID!) {
+	order(where: { id: $id }, stage: DRAFT) {
+		id
+		orderItems {
+			id
+			quantity
+			total
+			product {
+				...ProductListItem
+			}
+		}
+	}
+}
+
+mutation CartCreate {
+	createOrder(data: { total: 0 }) {
+		id
+	}
+}
+
+mutation CartAddItem($cartId: ID!, $productId: ID!, $total: Int!) {
+	createOrderItem(
+		data: {
+			quantity: 1
+			total: $total
+			order: { connect: { id: $cartId } }
+			product: { connect: { id: $productId } }
+		}
+	) {
+		id
+	}
+}
+
+mutation CartRemoveItem($itemId: ID!) {
+	deleteOrderItem(where: { id: $itemId }) {
+		id
+	}
+}
+
+mutation CartChangeItemQuantity($quantity: Int!, $total: Int!, $itemId: ID!) {
+	updateOrderItem(data: { quantity: $quantity, total: $total }, where: { id: $itemId }) {
+		quantity
+	}
+}

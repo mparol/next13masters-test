@@ -58,7 +58,7 @@ export const NavBar = ({ categories }: { categories: CategoryItemFragment[] }) =
 						</Link>
 					</li>
 					<li>
-						<Link href="/">
+						<Link href="/cart">
 							<div className="flex space-x-2">
 								<ShoppingBag />
 								<p className="font-semibold">0</p>

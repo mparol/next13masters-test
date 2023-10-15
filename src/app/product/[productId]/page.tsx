@@ -3,12 +3,15 @@
 import { type Metadata } from "next";
 //import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { notFound } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { getProductById, getProductVariantsById } from "@/api/products";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { formatMoney } from "@/utils";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 import { AddReviewForm } from "@/ui/organisms/AddReviewForm";
 import { ReviewList } from "@/ui/organisms/ReviewList";
+import { SubmitButton } from "@/ui/atoms/SubmitButton";
+import { addProductToCart, getOrCreateCart } from "@/api/cart";
 
 export const generateMetadata = async ({
 	params,
@@ -31,9 +34,20 @@ export default async function ProductPage({ params }: { params: { productId: str
 	const product = await getProductById(params.productId);
 	if (!product) notFound();
 	const variants = await getProductVariantsById(product.id);
+
+	async function addProductToCartAction() {
+		"use server";
+
+		if (!product) throw new Error("Product not found in server action");
+
+		const cart = await getOrCreateCart();
+		await addProductToCart(cart.id, product.id);
+		revalidatePath("/cart");
+	}
+
 	return (
 		<article>
-			<form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+			<form action={addProductToCartAction} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<div className="overflow-hidden rounded-md border bg-slate-50 hover:bg-slate-100">
 					<ProductImage src={product.images[0].url} alt={product.name} />
 				</div>
@@ -87,13 +101,12 @@ export default async function ProductPage({ params }: { params: { productId: str
 						</>
 					)}
 					<div className="mt-8">
-						<button
-							type="submit"
+						<SubmitButton
 							data-testid="add-to-cart-button"
 							className="inline-flex h-14 w-full items-center justify-center rounded-md from-cyan-600 to-sky-800 px-6 text-base font-medium leading-6 text-white shadow transition duration-150 ease-in-out enabled:bg-gradient-to-r hover:enabled:brightness-125 disabled:cursor-wait disabled:bg-gray-300"
 						>
 							Add to cart
-						</button>
+						</SubmitButton>
 					</div>
 				</div>
 			</form>
