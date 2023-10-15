@@ -4,7 +4,12 @@ import { getCartFromCookie } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
 export default async function CartPage() {
-	const cart = await getCartFromCookie();
+	let cart = await getCartFromCookie();
+	if (!cart) {
+		// sleep 2s and retry
+		await new Promise((resolve) => setTimeout(resolve, 2000));
+		cart = await getCartFromCookie();
+	}
 	if (!cart) redirect("/");
 
 	return (
