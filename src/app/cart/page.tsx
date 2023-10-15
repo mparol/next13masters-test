@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { ChangeQuantity } from "./ChangeQuantity";
 import { getCartFromCookie } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
@@ -36,8 +37,12 @@ export default async function CartPage() {
 										{item.product.name}
 									</div>
 								</td>
-								<td className="p-4 text-center" data-testid="quantity">
-									{item.quantity}
+								<td className="p-4 text-center">
+									<ChangeQuantity
+										itemId={item.id}
+										quantity={item.quantity}
+										price={item.product.price}
+									/>
 								</td>
 								<td className="p-4">{formatMoney(item.product.price / 100)}</td>
 								<td className="p-4">{formatMoney(item.total / 100)}</td>
