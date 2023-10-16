@@ -5,6 +5,7 @@ import { getCartFromCookie } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
 export default async function CartPage() {
+	await new Promise((resolve) => setTimeout(resolve, 2000));
 	let cart = await getCartFromCookie();
 	const startTime = Date.now();
 	while (!cart && Date.now() - startTime < 8000) {
