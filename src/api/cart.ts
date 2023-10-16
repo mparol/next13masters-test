@@ -31,6 +31,7 @@ export async function getCartFromCookie() {
 			variables: {
 				id: cartId,
 			},
+			noMemo: true,
 		});
 		return cart;
 	}

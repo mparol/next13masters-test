@@ -1,16 +1,13 @@
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import { ChangeQuantity } from "./ChangeQuantity";
 import { getCartFromCookie } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
 export default async function CartPage() {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
 	let cart = await getCartFromCookie();
 	const startTime = Date.now();
-	while (!cart && Date.now() - startTime < 8000) {
+	while (!cart && Date.now() - startTime < 5000) {
 		// sleep and retry
-		revalidatePath("/cart");
 		await new Promise((resolve) => setTimeout(resolve, 1000));
 		cart = await getCartFromCookie();
 	}
