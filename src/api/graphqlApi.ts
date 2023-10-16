@@ -4,13 +4,28 @@ type GraphQLResponse<T> =
 	| { data?: undefined; errors: { message: string }[] }
 	| { data: T; errors?: undefined };
 
-export const executeGraphql = async <TResult, TVariables>(
-	query: TypedDocumentString<TResult, TVariables>,
-	...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
-): Promise<TResult> => {
+export async function executeGraphql<TResult, TVariables>({
+	query,
+	variables,
+	cache,
+	next,
+	headers,
+	noMemo,
+}: {
+	query: TypedDocumentString<TResult, TVariables>;
+	cache?: RequestCache;
+	headers?: HeadersInit;
+	next?: NextFetchRequestConfig | undefined;
+	noMemo?: boolean;
+} & (TVariables extends { [key: string]: never }
+	? { variables?: never }
+	: { variables: TVariables })): Promise<TResult> {
 	if (!process.env.GRAPHQL_URL) {
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
+
+	let signal: AbortSignal | undefined;
+	if (noMemo) signal = new AbortController().signal;
 
 	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
@@ -18,10 +33,14 @@ export const executeGraphql = async <TResult, TVariables>(
 			query,
 			variables,
 		}),
+		cache,
+		next,
 		headers: {
+			...headers,
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${process.env.GRAPHQL_TOKEN}`,
 		},
+		signal,
 	});
 
 	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;
@@ -33,4 +52,4 @@ export const executeGraphql = async <TResult, TVariables>(
 	}
 
 	return graphqlResponse.data;
-};
+}

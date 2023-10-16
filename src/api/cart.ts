@@ -14,7 +14,7 @@ export async function getOrCreateCart() {
 		return cart;
 	}
 
-	const { createOrder: newCart } = await executeGraphql(CartCreateDocument);
+	const { createOrder: newCart } = await executeGraphql({ query: CartCreateDocument });
 	if (!newCart) {
 		throw new Error("Failed to create cart");
 	}
@@ -26,23 +26,32 @@ export async function getOrCreateCart() {
 export async function getCartFromCookie() {
 	const cartId = cookies().get("cartId")?.value;
 	if (cartId) {
-		const { order: cart } = await executeGraphql(CartGetByIdDocument, {
-			id: cartId,
+		const { order: cart } = await executeGraphql({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
 		});
 		return cart;
 	}
 }
 
 export async function addProductToCart(cartId: string, productId: string) {
-	const { product } = await executeGraphql(ProductGetByIdDocument, {
-		id: productId,
+	const { product } = await executeGraphql({
+		query: ProductGetByIdDocument,
+		variables: {
+			id: productId,
+		},
 	});
 	if (!product) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
 
-	const { order } = await executeGraphql(CartGetByIdDocument, {
-		id: cartId,
+	const { order } = await executeGraphql({
+		query: CartGetByIdDocument,
+		variables: {
+			id: cartId,
+		},
 	});
 	if (!order) {
 		throw new Error(`Order with id ${cartId} not found`);
@@ -51,16 +60,22 @@ export async function addProductToCart(cartId: string, productId: string) {
 	const existingItem = order.orderItems.find((item) => item.product?.id === productId);
 
 	if (existingItem) {
-		await executeGraphql(CartChangeItemQuantityDocument, {
-			quantity: existingItem.quantity + 1,
-			total: existingItem.total + product.price,
-			itemId: existingItem.id,
+		await executeGraphql({
+			query: CartChangeItemQuantityDocument,
+			variables: {
+				quantity: existingItem.quantity + 1,
+				total: existingItem.total + product.price,
+				itemId: existingItem.id,
+			},
 		});
 	} else {
-		await executeGraphql(CartAddItemDocument, {
-			cartId,
-			productId,
-			total: product.price,
+		await executeGraphql({
+			query: CartAddItemDocument,
+			variables: {
+				cartId,
+				productId,
+				total: product.price,
+			},
 		});
 	}
 }

@@ -6,10 +6,13 @@ import { CartChangeItemQuantityDocument } from "@/gql/graphql";
 
 export const changeItemQuantity = async (itemId: string, quantity: number, total: number) => {
 	try {
-		await executeGraphql(CartChangeItemQuantityDocument, {
-			quantity,
-			total,
-			itemId,
+		await executeGraphql({
+			query: CartChangeItemQuantityDocument,
+			variables: {
+				quantity,
+				total,
+				itemId,
+			},
 		});
 		revalidatePath("/cart");
 	} catch (e) {
