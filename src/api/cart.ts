@@ -32,7 +32,7 @@ export async function getCartFromCookie() {
 				id: cartId,
 			},
 			noMemo: true,
-			cache: "no-store",
+			cache: "no-cache",
 		});
 		return cart;
 	}
