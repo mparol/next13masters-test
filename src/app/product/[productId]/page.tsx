@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: { productId: str
 		await addProductToCart(cart.id, product.id);
 		revalidatePath("/cart");
 		// hack to wait for the mutation to finish
-		//await new Promise((resolve) => setTimeout(resolve, 1000));
+		await new Promise((resolve) => setTimeout(resolve, 1500));
 	}
 
 	return (
