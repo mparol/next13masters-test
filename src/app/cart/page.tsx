@@ -7,7 +7,7 @@ import { formatMoney } from "@/utils";
 export default async function CartPage() {
 	let cart = await getCartFromCookie();
 	const startTime = Date.now();
-	while (!cart && Date.now() - startTime < 5000) {
+	while (!cart && Date.now() - startTime < 8000) {
 		// sleep and retry
 		revalidatePath("/cart");
 		await new Promise((resolve) => setTimeout(resolve, 1000));

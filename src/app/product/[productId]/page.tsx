@@ -43,6 +43,7 @@ export default async function ProductPage({ params }: { params: { productId: str
 		const cart = await getOrCreateCart();
 		await addProductToCart(cart.id, product.id);
 		revalidatePath("/cart");
+		await new Promise((resolve) => setTimeout(resolve, 3000));
 	}
 
 	return (
