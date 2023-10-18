@@ -4,13 +4,14 @@ import { getCartFromCookie } from "@/api/cart";
 import { formatMoney } from "@/utils";
 
 export default async function CartPage() {
-	let cart = await getCartFromCookie();
-	const startTime = Date.now();
-	while (!cart && Date.now() - startTime < 10000) {
-		// sleep and retry
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		cart = await getCartFromCookie();
-	}
+	const cart = await getCartFromCookie();
+	// let cart = await getCartFromCookie();
+	// const startTime = Date.now();
+	// while (!cart && Date.now() - startTime < 10000) {
+	// 	// sleep and retry
+	// 	await new Promise((resolve) => setTimeout(resolve, 1000));
+	// 	cart = await getCartFromCookie();
+	// }
 	if (!cart) redirect("/");
 
 	return (
