@@ -10815,6 +10815,7 @@ export type ProductsGetBySearchQueryQuery = { products: Array<{ id: string, name
 export type ProductsGetListQueryVariables = Exact<{
   take?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<ProductOrderByInput>;
 }>;
 
 
@@ -11094,8 +11095,8 @@ export const ProductsGetBySearchQueryDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductsGetBySearchQueryQuery, ProductsGetBySearchQueryQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList($take: Int, $skip: Int) {
-  products(first: $take, skip: $skip) {
+    query ProductsGetList($take: Int, $skip: Int, $sort: ProductOrderByInput) {
+  products(first: $take, skip: $skip, orderBy: $sort) {
     ...ProductListItem
   }
 }

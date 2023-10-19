@@ -20,7 +20,8 @@ export function ActiveLink<T extends string>({
 	children: ReactNode;
 }) {
 	const pathname = usePathname();
-	const isActive = partial ? pathname.startsWith(href.toString()) : pathname === href;
+	const clearHref = new URL(href.toString(), "http://dummy.com").pathname;
+	const isActive = partial ? pathname.startsWith(clearHref) : pathname === clearHref;
 
 	return (
 		<Link<T>

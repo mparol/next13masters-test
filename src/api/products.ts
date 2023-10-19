@@ -11,6 +11,7 @@ import {
 	ProductsGetListDocument,
 	ProductsGetRelatedListDocument,
 	ProductVariantsGetByIdDocument,
+	type ProductOrderByInput,
 } from "@/gql/graphql";
 
 export async function getProductsCount() {
@@ -18,8 +19,11 @@ export async function getProductsCount() {
 	return res.productsConnection.aggregate.count;
 }
 
-export async function getProductsList(take: number, skip: number) {
-	const res = await executeGraphql({ query: ProductsGetListDocument, variables: { take, skip } });
+export async function getProductsList(take: number, skip: number, sort?: ProductOrderByInput) {
+	const res = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: { take, skip, sort },
+	});
 	return res.products;
 }
 

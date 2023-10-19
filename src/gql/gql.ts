@@ -23,7 +23,7 @@ const documents = {
     "query ProductsGetByCategorySlug($slug: String!, $take: Int, $skip: Int) {\n  categories(where: {slug: $slug}) {\n    products(first: $take, skip: $skip) {\n      ...ProductListItem\n    }\n  }\n}\n\nquery ProductsGetByCategoryCount($slug: String!) {\n  productsConnection(where: {categories_some: {slug: $slug}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetByCategorySlugDocument,
     "query ProductsGetByCollectionSlug($slug: String!) {\n  collections(where: {slug: $slug}) {\n    products {\n      ...ProductListItem\n    }\n  }\n}": types.ProductsGetByCollectionSlugDocument,
     "query ProductsGetBySearchQuery($query: String!) {\n  products(where: {_search: $query}) {\n    ...ProductListItem\n  }\n}": types.ProductsGetBySearchQueryDocument,
-    "query ProductsGetList($take: Int, $skip: Int) {\n  products(first: $take, skip: $skip) {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListDocument,
+    "query ProductsGetList($take: Int, $skip: Int, $sort: ProductOrderByInput) {\n  products(first: $take, skip: $skip, orderBy: $sort) {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetListDocument,
     "query ProductsGetRelatedList($id: ID!) {\n  product(where: {id: $id}) {\n    categories(first: 1) {\n      products(first: 4) {\n        ...ProductListItem\n      }\n    }\n  }\n}": types.ProductsGetRelatedListDocument,
     "mutation ReviewCreate($review: ReviewCreateInput!) {\n  createReview(data: $review) {\n    id\n  }\n}\n\nmutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    id\n  }\n}": types.ReviewCreateDocument,
     "query ReviewsGetByProductId($productId: ID!) {\n  reviews(where: {product: {id: $productId}}) {\n    ...Review\n  }\n}\n\nfragment Review on Review {\n  id\n  headline\n  name\n  email\n  content\n  rating\n}": types.ReviewsGetByProductIdDocument,
@@ -68,7 +68,7 @@ export function graphql(source: "query ProductsGetBySearchQuery($query: String!)
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductsGetList($take: Int, $skip: Int) {\n  products(first: $take, skip: $skip) {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetListDocument;
+export function graphql(source: "query ProductsGetList($take: Int, $skip: Int, $sort: ProductOrderByInput) {\n  products(first: $take, skip: $skip, orderBy: $sort) {\n    ...ProductListItem\n  }\n}\n\nquery ProductsGetCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetListDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

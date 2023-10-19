@@ -1,4 +1,5 @@
 import { getProductsCount, getProductsList } from "@/api/products";
+import type { ProductOrderByInput } from "@/gql/graphql";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 const perPage = 4;
@@ -10,6 +11,17 @@ export async function generateStaticParams() {
 	return pages.map((page) => ({ page: page.toString() }));
 }
 
-export default async function ProductsPage({ params }: { params: { page: number } }) {
-	return <ProductList products={await getProductsList(perPage, perPage * (params.page - 1))} />;
+export default async function ProductsPage({
+	params,
+	searchParams,
+}: {
+	params: { page: number };
+	searchParams: { sort: string };
+}) {
+	const prodOrder: ProductOrderByInput = searchParams.sort as ProductOrderByInput;
+	return (
+		<ProductList
+			products={await getProductsList(perPage, perPage * (params.page - 1), prodOrder)}
+		/>
+	);
 }
