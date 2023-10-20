@@ -1,6 +1,9 @@
 mutation ReviewCreate($review: ReviewCreateInput!) {
 	createReview(data: $review) {
 		id
+		product {
+			currRating: avgRating
+		}
 	}
 }
 

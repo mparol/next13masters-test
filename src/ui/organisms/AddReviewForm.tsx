@@ -34,6 +34,9 @@ export const AddReviewForm = ({ productId }: { productId: string }) => {
 		try {
 			const res = await addReview(review);
 			revalidatePath(`/product/${productId}`);
+			revalidatePath(`/products/[page]`, "page");
+			//TODO jeszcze trzeba by sie zastanowic czy nie przerobic jednak na revalidateTag,
+			// bo nie tylko na products/[page] jest lista produktow
 			console.log("Success: " + res);
 		} catch (e) {
 			console.log(e);

@@ -1,0 +1,7 @@
+query ProductGetReviewsCount($prodId: ID!) {
+	reviewsConnection(where: { product: { id: $prodId } }) {
+		aggregate {
+			count
+		}
+	}
+}

@@ -2,7 +2,7 @@ import type { ProductListItemFragment } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
 
 export const ProductListItemDescription = ({
-	product: { categories, name, price },
+	product: { categories, name, price, avgRating },
 }: {
 	product: ProductListItemFragment;
 }) => {
@@ -16,10 +16,15 @@ export const ProductListItemDescription = ({
 					</p>
 				)}
 			</div>
-			<p className="text-sm font-medium text-gray-900">
-				<span className="sr-only">Cena:</span>{" "}
-				<span data-testid="product-price">{formatMoney(price / 100)}</span>
-			</p>
+			<div className="text-right">
+				<p className="text-sm font-medium text-gray-900">
+					<span className="sr-only">Cena:</span>{" "}
+					<span data-testid="product-price">{formatMoney(price / 100)}</span>
+				</p>
+				<p className="text-sm text-gray-500">
+					Rating:&nbsp;<span data-testid="product-rating">{Math.round(avgRating)}</span>
+				</p>
+			</div>
 		</div>
 	);
 };

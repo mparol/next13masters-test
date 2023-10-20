@@ -10,5 +10,6 @@ query ProductGetById($id: ID!) {
 			url
 		}
 		price
+		avgRating
 	}
 }
